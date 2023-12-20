@@ -11,6 +11,8 @@
       sizes="32x32"
       href="./assets/images/favicon-32x32.png"
     />
+    <link rel="stylesheet" href="./css/style.css" />
+    <script src="./app.js" defer></script>
 
     <title>Frontend Mentor | Age calculator app</title>
 
@@ -26,6 +28,62 @@
     </style>
   </head>
   <body>
+    <main class="main">
+      <div class="main-container">
+        <form class="form">
+          <div class="form-container">
+            <div class="form-item">
+              <p class="form__text">Day</p>
+              <input
+                class="form__input"
+                type="text"
+                placeholder="DD"
+                id="day"
+              />
+              <p class="form__error">Must be a valid date</p>
+            </div>
+            <div class="form-item">
+              <p class="form__text">Month</p>
+              <input
+                class="form__input"
+                type="text"
+                placeholder="MM"
+                id="month"
+              />
+              <p class="form__error">Must be a valid month</p>
+            </div>
+            <div class="form-item">
+              <p class="form__text">Year</p>
+              <input
+                class="form__input"
+                type="text"
+                placeholder="YYYY"
+                id="year"
+              />
+              <p class="form__error">Must be in the past</p>
+            </div>
+          </div>
+        </form>
+        <div class="main-btn">
+          <div class="main__submit">
+            <img src="./assets/images/icon-arrow.svg" alt="" />
+          </div>
+          <div class="main__line"></div>
+        </div>
+        <div class="main__years text">
+          <h1 class="main__years--number size-purple">- -</h1>
+          <h2 class="main__years--text size">years</h2>
+        </div>
+        <div class="main__months text">
+          <h1 class="main__month--number size-purple">- -</h1>
+          <h2 class="main__month--text size">months</h2>
+        </div>
+        <div class="main__days text">
+          <h1 class="main__days--number size-purple">- -</h1>
+          <h2 class="main__days--text size">days</h2>
+        </div>
+      </div>
+    </main>
     <!-- Day
   DD
 
@@ -39,11 +97,11 @@
   -- months
   -- days -->
 
-    <div class="attribution">
+    <!-- <div class="attribution">
       Challenge by
       <a href="https://www.frontendmentor.io?ref=challenge" target="_blank"
         >Frontend Mentor</a
       >. Coded by <a href="#">Your Name Here</a>.
-    </div>
+    </div> -->
   </body>
 </html>
