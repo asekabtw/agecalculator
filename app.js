@@ -1,23 +1,36 @@
-const day = document.getElementById("day");
-const month = document.getElementById("month");
-const year = document.getElementById("year");
+let day = document.getElementById("day");
+let month = document.getElementById("month");
+let year = document.getElementById("year");
 const inputs = document.querySelectorAll(".form__input");
 const submit = document.querySelector(".main__submit");
-// const year = new Date().getTime() - new Date("1984-09-24");
-
-// const result = new Number(
-//   (new Date().getTime() - new Date("24 September 1984").getTime()) / 31536000000
-// );
-
-// console.log(year / (1000 * 60 * 60 * 24));
+const yearsNumber = document.querySelector(".main__years--number");
+const monthsNumber = document.querySelector(".main__months--number");
+const daysNumber = document.querySelector(".main__days--number");
 
 function getDaysInMonth(month, year) {
   return new Date(year, month, 0).getDate();
 }
 
+let status = 0;
 function check() {
   const daysInMonth = getDaysInMonth(month.value, year.value);
-  if (day.value > daysInMonth) {
+  const nowDate = new Date().getTime();
+  const prevDate = new Date(
+    `${year.value}-${month.value}-${day.value}`
+  ).getTime();
+  console.log(nowDate);
+  console.log(prevDate);
+  if (prevDate > nowDate) {
+    day.parentElement.classList.add("error");
+    day.parentElement.querySelector(".form__error").innerHTML =
+      "Must be a valid date";
+    month.parentElement.classList.add("error");
+    month.parentElement.querySelector(".form__error").innerHTML =
+      "Must be a valid month";
+    year.parentElement.classList.add("error");
+    year.parentElement.querySelector(".form__error").innerHTML =
+      "Must be a valid year";
+  } else if (day.value > daysInMonth) {
     day.parentElement.classList.add("error");
     day.parentElement.querySelector(".form__error").innerHTML =
       "Must be a valid date";
@@ -29,21 +42,17 @@ function check() {
     year.parentElement.classList.add("error");
     year.parentElement.querySelector(".form__error").innerHTML =
       "Must be a valid year";
-  } else if (day.value > 28 && month.value === 2 && year.value % 4 === 0) {
   } else {
-    console.log(day.value);
+    day = day.value;
+    month = month.value;
+    year = year.value;
+    // day = 28;
+    // month = 12;
+    // year = 2000;
   }
 }
 
 submit.addEventListener("click", () => {
-  // if (day.value <= 31 && month.value <= 12 && year.value >= 1900) {
-  //   console.log(day.value);
-  //   console.log(month.value);
-  //   console.log(year.value);
-  // }
-  // if (day.value > 31) {
-  // } else if (day.value == '' || month.value == '' || year.value == '') {
-  // }
   inputs.forEach((item) => {
     if (item.value === "") {
       item.parentElement.classList.add("error");
@@ -54,15 +63,66 @@ submit.addEventListener("click", () => {
     } else {
       item.parentElement.classList.remove("error");
     }
-    // else if (inputs[0] === item && item.value > 31) {
-    //   item.parentElement.classList.add("error");
-    // } else if (inputs[1] === item && item.value > 12) {
-    //   item.parentElement.classList.add("error");
-    // } else if (inputs[2] === item && item.value < 1900) {
-    //   item.parentElement.classList.add("error");
-    // }
   });
-  check();
-});
 
-check();
+  let currentDay = new Date().getDate();
+  // let currentDay = 18;
+  let currentMonth = new Date().getMonth() + 1;
+  // let currentMonth = 10;
+  let currentYear = new Date().getFullYear();
+  let finalDay = 0;
+  let finalMonth = 0;
+  const daysInMonth = getDaysInMonth(month.value, year.value);
+  check();
+  if (day !== "" && month !== "" && year !== "") {
+    if (currentDay >= day - 1) {
+      console.log("plus");
+      finalDay = currentDay - day + 1;
+      // if (currentDay >= day) {
+      if (currentMonth >= month) {
+        finalMonth = currentMonth - month;
+        year = currentYear - year;
+      } else {
+        finalMonth = currentMonth + 12 - month;
+        year = currentYear - year - 1;
+      }
+      // }
+    } else {
+      console.log("minus");
+      finalDay = daysInMonth - day + currentDay + 1;
+      currentMonth--;
+      // if (currentDay < day - 1) {
+      //   currentMonth--;
+      // }
+      if (currentMonth >= month) {
+        finalMonth = currentMonth - month;
+        year = currentYear - year;
+      } else {
+        finalMonth = currentMonth + 12 - month;
+        year = currentYear - year - 1;
+      }
+    }
+  }
+  if (
+    !isNaN(day) &&
+    day !== "" &&
+    !isNaN(month) &&
+    month !== "" &&
+    !isNaN(year) &&
+    year !== ""
+  ) {
+    yearsNumber.innerHTML = year;
+    monthsNumber.innerHTML = finalMonth;
+    daysNumber.innerHTML = finalDay;
+  }
+
+  console.log(finalDay.toString());
+  console.log(finalMonth.toString());
+  console.log(year.toString());
+  day = document.getElementById("day");
+  month = document.getElementById("month");
+  year = document.getElementById("year");
+  // day = day.value;
+  // month = month.value;
+  // year = year.value;
+});
